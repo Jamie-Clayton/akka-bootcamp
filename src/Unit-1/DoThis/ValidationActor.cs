@@ -3,7 +3,7 @@ using System;
 
 namespace WinTail
 {
-    class ValidationActor : UntypedActor
+    public class ValidationActor : UntypedActor
     {
         private readonly IActorRef _consoleWriterActor;
 
