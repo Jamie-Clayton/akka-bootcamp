@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Interop;
 using Akka.Actor;
 
 namespace WinTail
@@ -11,12 +12,6 @@ namespace WinTail
     {
         public const string StartCommand = "start";
         public const string ExitCommand = "exit";
-        private readonly IActorRef _validationActor;
-
-        public ConsoleReaderActor(IActorRef validationActor)
-        {
-            _validationActor = validationActor;
-        }
 
         protected override void OnReceive(object message)
         {
@@ -47,7 +42,9 @@ namespace WinTail
                 Context.System.Terminate();
                 return;
             }
-            _validationActor.Tell(message);
+
+            //  Send the message for validation
+            Context.ActorSelection("akka://MyActorSystem/user/validationActor").Tell(message);
         }
 
         #endregion
